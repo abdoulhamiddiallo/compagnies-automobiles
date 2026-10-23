@@ -235,6 +235,58 @@ table.heat td:first-child{text-align:left;background:var(--bg2)!important;color:
 .haut.on{opacity:1;pointer-events:auto}
 @media(max-width:1000px){.som-tiles{grid-template-columns:repeat(3,1fr)}}@media(max-width:800px){.som-tiles{grid-template-columns:1fr 1fr}.syns{grid-template-columns:1fr}}
 
+/* v4.1 : lisibilité téléphone */
+.top{background:var(--bg2);backdrop-filter:none}
+.tm b{font-size:12px;line-height:1.1}.tm span{font-size:10.5px}
+@media(max-width:800px){
+  .tm{padding:4px 5px}.tm b{font-size:10.5px}.tm span{font-size:9.5px}
+  .facts{grid-template-columns:1fr 1fr}.facts b{font-size:15px}
+  .kpi .v{font-size:22px}
+  .race .row{grid-template-columns:22px 26px 86px 1fr 52px;gap:5px}.race .nm{font-size:11.5px}.race .v{font-size:11px}.race-ctl .yr{font-size:24px;min-width:70px}
+  .lg.big{width:56px;height:56px}
+  table{font-size:12.5px}th,td{padding:7px 6px}
+  .gc .st b{font-size:12px}
+  .som-tile .ic{font-size:18px}.som-tile b{font-size:12.5px}
+  
+  .hero p{font-size:14px}.hero .chips span{font-size:11.5px;padding:4px 9px}
+  .sheet .hd{flex-direction:column;align-items:flex-start;gap:10px}.sheet .hd .x{top:10px;right:10px}
+  .tabs button{padding:9px 10px;font-size:12.5px}
+  .ch-h p{font-size:13.5px}
+  .cmp table{font-size:11.5px}.cmp td,.cmp th{padding:6px 4px}
+  .heat th{font-size:9px}table.heat td{font-size:11px;padding:4px 2px}
+  .chks{max-height:120px;overflow:auto}
+  .legend{font-size:11px}
+}
+
+/* v4.2 : légende du treemap, en-tête téléphone */
+.tm-leg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px 14px;margin-top:12px}
+.tl-it{display:grid;grid-template-columns:22px 12px 1fr auto auto;align-items:center;gap:6px;font-size:12.5px;padding:4px 2px;border-bottom:1px solid var(--line);cursor:pointer}
+.tl-it .rk{font-family:var(--mono);color:var(--ink3);font-size:11px}.tl-it i{width:10px;height:10px;border-radius:3px;display:block}
+.tl-it .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tl-it b{font-family:var(--mono);font-size:12px}.tl-it .pc{font-family:var(--mono);font-size:11px;color:var(--ink3);min-width:42px;text-align:right}
+@media(max-width:1000px){.tm-leg{grid-template-columns:1fr 1fr}}
+@media(max-width:800px){
+  .tm-leg{grid-template-columns:1fr}
+  .brand{font-size:13.5px;white-space:normal;line-height:1.15;min-width:0;flex:1}.brand .logo{width:30px;height:30px;font-size:12px;flex:none}
+  .search{flex:none;width:40px;min-width:40px}.search input{padding:8px;color:transparent;cursor:pointer}.search input::placeholder{color:transparent}.search .ico{left:12px;top:9px}
+  .search:focus-within{position:fixed;left:10px;right:10px;top:8px;width:auto;z-index:70}.search:focus-within input{color:var(--ink);padding-left:36px;background:var(--bg2)}.search:focus-within input::placeholder{color:var(--ink3)}
+  .top .in>div:last-child{margin-left:0!important}
+}
+
+/* v4.3 */
+.race .lg{width:32px;height:32px;border-radius:7px}
+@media(max-width:800px){
+  .haut{display:none}
+  .race .lg{width:26px;height:26px;border-radius:6px}.race .lg img{padding:2px}
+  .cmp table{table-layout:fixed;width:100%}.cmp th:first-child,.cmp td:first-child{width:28%}
+  .cmp th div{flex-direction:column;align-items:flex-start!important;gap:4px!important}.cmp th .lg{width:30px;height:30px}
+  .cmp td,.cmp th{word-break:break-word;white-space:normal;font-size:11px}
+  th{white-space:normal}
+  .tw{-webkit-overflow-scrolling:touch}
+}
+
+.glisser{display:none;font-size:12px;color:var(--accent);margin-bottom:6px}
+@media(max-width:800px){.glisser{display:block}table.heat td:first-child,table.heat th:first-child{position:sticky;left:0;z-index:1;background:var(--bg2)}table.heat td{min-width:34px}}
+
 </style>
 </head>
 <body>
@@ -268,7 +320,7 @@ table.heat td:first-child{text-align:left;background:var(--bg2)!important;color:
 
 <section class="ch" id="classements"><div class="ch-h"><div><span class="num">CHAPITRE 02</span><h2>Classements</h2><p>Les constructeurs classés selon onze indicateurs : ventes, chiffre d'affaires, bourse, résultat, effectifs, R&D, électrification, marges, croissance.</p></div><select id="indicSel" class="btn"></select></div>
   <div class="grid g2"><div class="tw" id="classTable" style="max-height:620px"></div><div class="card"><h3>Top 20</h3><div class="chart tall"><canvas id="cClass"></canvas></div><p class="small muted" id="classNote"></p></div></div>
-  <div class="card" style="margin-top:16px"><h3>Carte de chaleur : rang des 30 premiers groupes sur dix indicateurs <span class="sub">1 = meilleur · survolez une case</span></h3><div class="tw" id="heat"></div></div>
+  <div class="card" style="margin-top:16px"><h3>Carte de chaleur : rang des 30 premiers groupes sur dix indicateurs <span class="sub">1 = meilleur · survolez une case</span></h3><div class="glisser">Faites glisser le tableau vers la gauche pour voir les dix indicateurs →</div><div class="tw" id="heat"></div></div>
 </section>
 
 <section class="ch" id="pays"><div class="ch-h"><div><span class="num">CHAPITRE 03</span><h2>Pays producteurs</h2><p>Où sont fabriqués les 95 millions de véhicules produits chaque année : la Chine en produit plus d'un sur trois.</p></div></div>
@@ -325,11 +377,11 @@ table.heat td:first-child{text-align:left;background:var(--bg2)!important;color:
 
 <section class="ch" id="finances"><div class="ch-h"><div><span class="num">CHAPITRE 09</span><h2>Finances</h2><p>Chiffre d'affaires, résultat net, marges et dépenses de recherche de l'exercice 2025.</p></div></div>
   <div class="card"><h3>Chiffre d'affaires et résultat net 2025 <span class="sub">milliards de dollars</span></h3><div class="chart tall"><canvas id="cCA"></canvas></div></div>
-  <div class="grid g2" style="margin-top:16px"><div class="card"><h3>Marge nette</h3><div class="chart tall"><canvas id="cMarge"></canvas></div></div><div style="display:grid;gap:16px"><div class="card"><h3>Recherche et développement <span class="sub">Md$, top 15</span></h3><div class="chart"><canvas id="cRD"></canvas></div></div><div class="card" id="finText"></div></div></div>
+  <div class="grid g2" style="margin-top:16px"><div class="card"><h3>Marge nette</h3><div class="chart tall"><canvas id="cMarge"></canvas></div><p class="small muted" id="margeNote"></p></div><div style="display:grid;gap:16px"><div class="card"><h3>Recherche et développement <span class="sub">Md$, top 15</span></h3><div class="chart"><canvas id="cRD"></canvas></div></div><div class="card" id="finText"></div></div></div>
 </section>
 
 <section class="ch" id="bourse"><div class="ch-h"><div><span class="num">CHAPITRE 10</span><h2>Bourse</h2><p>Capitalisations au 31 décembre 2025, places de cotation, multiples de chiffre d'affaires.</p></div></div>
-  <div class="card"><h3>Le marché en une image : treemap des capitalisations <span class="sub">surface proportionnelle à la valeur au 31/12/2025</span></h3><div class="treemap" id="treemap"></div></div>
+  <div class="card"><h3>Le marché en une image : treemap des capitalisations <span class="sub">surface proportionnelle à la valeur au 31/12/2025</span></h3><div class="treemap" id="treemap"></div><div class="tm-leg" id="treemapLeg"></div></div>
   <div class="card" style="margin-top:16px"><h3>Capitalisation boursière <span class="sub">Md$, échelle logarithmique</span></h3><div class="chart tall"><canvas id="cCapi"></canvas></div></div>
   <div class="grid g2" style="margin-top:16px"><div class="tw" id="bourseTable" style="max-height:560px"></div><div style="display:grid;gap:16px"><div class="card"><h3>Valeur boursière par pays</h3><div class="chart short"><canvas id="cCapiPays"></canvas></div></div><div class="card" id="bourseText"></div></div></div>
 </section>
@@ -415,9 +467,11 @@ table.heat td:first-child{text-align:left;background:var(--bg2)!important;color:
 const D = window.DATA;
 const G = D.groupes, M = D.marques, U = D.usines, P = D.pays;
 const GI = Object.fromEntries(G.map(g => [g.id, g]));
+const COURTS = {toyota:'Toyota',volkswagen:'Volkswagen',hyundai:'Hyundai',gm:'General Motors',stellantis:'Stellantis',byd:'BYD',saic:'SAIC',ford:'Ford',geely:'Geely',honda:'Honda',nissan:'Nissan',suzuki:'Suzuki',bmw:'BMW',mercedes:'Mercedes-Benz',tesla:'Tesla',renault:'Renault',chery:'Chery',changan:'Changan',faw:'FAW',dongfeng:'Dongfeng',gac:'GAC',greatwall:'Great Wall',tata:'Tata Motors',mahindra:'Mahindra',mazda:'Mazda',subaru:'Subaru',mitsubishi:'Mitsubishi',ferrari:'Ferrari',porsche:'Porsche',astonmartin:'Aston Martin',xiaomi:'Xiaomi',leapmotor:'Leapmotor',nio:'NIO',xpeng:'XPeng',liauto:'Li Auto',rivian:'Rivian',lucid:'Lucid',vinfast:'VinFast',seres:'Seres',isuzu:'Isuzu',daimlertruck:'Daimler Truck',volvogroup:'Volvo Group',paccar:'PACCAR',traton:'Traton'};
+const court = g => (g && COURTS[g.id]) || (g && g.nom) || '';
 const ANNEES = [2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
 const $ = s => document.querySelector(s), $$ = s => Array.from(document.querySelectorAll(s));
-const fmt = (n, d=0) => n == null ? '–' : n.toLocaleString('fr-FR', {maximumFractionDigits:d, minimumFractionDigits:d});
+const fmt = (n, d=0) => (n == null || isNaN(+n)) ? '–' : (+n).toLocaleString('fr-FR', {maximumFractionDigits:d, minimumFractionDigits:d});
 const fM = v => v >= 1 ? fmt(v,2)+' M' : fmt(v*1000,0)+' k';           // véhicules (millions)
 const fB = v => v == null || v === 0 ? '–' : (v >= 1000 ? fmt(v/1000,2)+' T$' : fmt(v,1)+' Md$');
 const fK = v => v == null ? '–' : (v >= 1 ? fmt(v,0)+' 000' : fmt(v*1000,0));
@@ -426,8 +480,47 @@ const flag = p => PAYS_DRAPEAU[p] || '🏳️';
 const pal = ['#1d4ed8','#dc2626','#059669','#d97706','#7c3aed','#0891b2','#db2777','#65a30d','#ea580c','#4f46e5','#0d9488','#9333ea','#b91c1c','#2563eb','#16a34a','#ca8a04','#c026d3','#0284c7','#e11d48','#15803d'];
 const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
 const chartColors = () => ({ink: isDark() ? '#b7c0d0' : '#3b4556', grid: isDark() ? '#243049' : '#e2e5ea'});
+
+/* Valeurs écrites au bout des barres horizontales, pour une lecture sans survol (téléphone) */
+const fmtAuto = v => { const a = Math.abs(v); return a >= 1000 ? fmt(v,0) : a >= 100 ? fmt(v,0) : a >= 10 ? fmt(v,1) : a >= 1 ? fmt(v,2) : fmt(v,2); };
+Chart.register({id:'valeurs', afterDatasetsDraw(chart){
+  const o = chart.options; if(chart.config.type !== 'bar' || o.indexAxis !== 'y' || chart.data.datasets.length !== 1) return;
+  if(o.scales && o.scales.x && o.scales.x.stacked) return;
+  const ctx = chart.ctx, meta = chart.getDatasetMeta(0), ds = chart.data.datasets[0], f = ds.vf || fmtAuto;
+  ctx.save(); ctx.font = '600 10.5px Inter, system-ui, sans-serif'; ctx.textBaseline = 'middle';
+  meta.data.forEach((bar, i) => { const v = ds.data[i]; if(v == null || isNaN(v)) return; const t = f(v), w = ctx.measureText(t).width, right = chart.chartArea.right;
+    let x = v < 0 ? bar.x - 4 - w : bar.x + 4, col = isDark() ? '#e8ecf3' : '#0b1220';
+    if(v >= 0 && x + w > right + 2){ x = bar.x - w - 5; col = '#fff'; }
+    ctx.fillStyle = col; ctx.fillText(t, x, bar.y); });
+  ctx.restore(); }});
+
+/* Noms écrits à côté des bulles les plus grandes */
+Chart.register({id:'nomsBulles', afterDatasetsDraw(chart){
+  if(chart.config.type !== 'bubble') return; const ctx = chart.ctx; const pts = [];
+  chart.data.datasets.forEach((ds,i)=>{ const m = chart.getDatasetMeta(i); if(m.hidden) return; const el = m.data[0]; if(!el) return; pts.push({x:el.x, y:el.y, r:el.options.radius, t:ds.short||ds.label}); });
+  pts.sort((a,b)=>b.r-a.r); const placed = [], lim = MOBILE() ? 14 : 26;
+  ctx.save(); ctx.font = (MOBILE()?'600 10px':'600 11px')+' Inter, system-ui, sans-serif'; ctx.textBaseline = 'middle'; ctx.fillStyle = isDark() ? '#e8ecf3' : '#0b1220';
+  for(const p of pts){ if(placed.length >= lim) break; const w = ctx.measureText(p.t).width, x = p.x + p.r + 3, y = p.y;
+    if(x + w > chart.chartArea.right) continue; if(placed.some(q => Math.abs(q.y - y) < 12 && x < q.x + q.w && x + w > q.x)) continue;
+    ctx.fillText(p.t, x, y); placed.push({x, y, w}); }
+  ctx.restore(); }});
 const charts = {};
-function mk(id, cfg){ if(charts[id]) charts[id].destroy(); const c = chartColors(); Chart.defaults.color = c.ink; Chart.defaults.borderColor = c.grid; Chart.defaults.font.family = "'Inter',system-ui,sans-serif"; charts[id] = new Chart($('#'+id), cfg); return charts[id]; }
+const MOBILE = () => innerWidth < 800;
+function mk(id, cfg){ if(charts[id]) charts[id].destroy();
+  if(cfg.options && cfg.options.plugins && cfg.options.plugins.valeurs){ cfg.data.datasets[0].vf = cfg.options.plugins.valeurs.fmt; delete cfg.options.plugins.valeurs; }
+  if(MOBILE() && cfg.type==='bar' && cfg.options && cfg.options.indexAxis!=='y' && cfg.data.labels.length > 8){
+    cfg.options.indexAxis = 'y';
+    const sx = (cfg.options.scales||{}).x || {}, sy = (cfg.options.scales||{}).y || {};
+    const nx = Object.assign({}, sy), ny = Object.assign({}, sx); delete ny.title; delete ny.max; delete ny.type; if(ny.ticks){ ny.ticks = Object.assign({}, ny.ticks); delete ny.ticks.maxRotation; delete ny.ticks.autoSkip; ny.ticks.autoSkip = false; ny.ticks.font = {size:10}; }
+    cfg.options.scales = Object.assign({}, cfg.options.scales, {x:nx, y:ny});
+    if(cfg.options.plugins && cfg.options.plugins.legend && cfg.data.datasets.length>1) cfg.options.plugins.legend.position = 'bottom';
+    const box = $('#'+id).parentElement; if(box && box.classList.contains('chart')) box.style.height = Math.max(320, cfg.data.labels.length * 22 + 60) + 'px';
+  }
+  if(cfg.type==='bar' && cfg.options && cfg.options.indexAxis==='y'){ cfg.options.layout = Object.assign({padding:{right:44}}, cfg.options.layout||{}); cfg.options.scales = cfg.options.scales||{}; const yy = cfg.options.scales.y = Object.assign({}, cfg.options.scales.y); yy.ticks = Object.assign({}, yy.ticks, {autoSkip:false}); if(MOBILE()) yy.ticks.font = {size:10.5}; }
+  Object.values((cfg.options && cfg.options.scales) || {}).forEach(sc => { if(sc && sc.type === 'logarithmic'){ sc.ticks = Object.assign({}, sc.ticks, {autoSkip:true, callback:v => { const l = Math.log10(v), k = Math.round(l); return Math.abs(l-k) < 1e-6 ? fmt(v, v < 1 ? (v < 0.1 ? 2 : 1) : 0) : ''; }}); } });
+  if(cfg.type==='bubble') cfg.data.datasets.forEach(ds => { const g = G.find(x=>x.nom===ds.label); if(g) ds.short = court(g); });
+  if(MOBILE() && cfg.type==='doughnut' && cfg.options && cfg.options.plugins && cfg.options.plugins.legend) cfg.options.plugins.legend.position = 'bottom';
+  if(MOBILE() && cfg.type==='bar' && cfg.options.indexAxis==='y' && cfg.data.labels.length > 14){ const box = $('#'+id).parentElement; if(box && box.classList.contains('chart')) box.style.height = Math.max(320, cfg.data.labels.length * 22 + 60) + 'px'; } const c = chartColors(); Chart.defaults.color = c.ink; Chart.defaults.borderColor = c.grid; Chart.defaults.font.family = "'Inter',system-ui,sans-serif"; charts[id] = new Chart($('#'+id), cfg); return charts[id]; }
 function toast(t){ const e = $('#toast'); e.textContent = t; e.classList.add('on'); setTimeout(()=>e.classList.remove('on'), 2200); }
 
 /* Logos : cascade de sources (image officielle par domaine, puis favicon haute résolution, puis monogramme coloré) */
@@ -498,7 +591,7 @@ function renderPanorama(){
   $('#kpis').innerHTML = [[G.length,0,'','groupes'],[M.length,0,'','marques'],[U.length,0,'','usines cartographiées'],[tv,1,' M','véhicules vendus en 2025'],[te*1000,0,'','salariés'],[tc/1000,2,' T$','de capitalisation boursière']].map(([n,d,s,l])=>`<div class="kpi"><div class="v" data-n="${n}" data-d="${d}" data-s="${s}">${fmt(n,d)}${s}</div><div class="l">${l}</div></div>`).join('');
   murLogos();
   const top = [...G].sort((a,b)=>b.ventes-a.ventes).slice(0,15);
-  renderAll.charts.cTop = () => mk('cTop', {type:'bar', data:{labels:top.map(g=>g.nom.replace(' Group','').replace(' Motor Corporation','').replace(' Company','').replace(' Motor Co.','')), datasets:[{data:top.map(g=>g.ventes), backgroundColor:top.map(g=>g.couleur), borderRadius:5}]}, options:{indexAxis:'y', plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+fM(c.raw)+' de véhicules'}}}, scales:{x:{title:{display:true,text:'Millions de véhicules (2025)'}}}, maintainAspectRatio:false}});
+  renderAll.charts.cTop = () => mk('cTop', {type:'bar', data:{labels:top.map(court), datasets:[{data:top.map(g=>g.ventes), backgroundColor:top.map(g=>g.couleur), borderRadius:5}]}, options:{indexAxis:'y', plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+fM(c.raw)+' de véhicules'}}}, scales:{x:{title:{display:true,text:'Millions de véhicules (2025)'}}}, maintainAspectRatio:false}});
   renderAll.charts.cTop();
   const byPays = {}; G.forEach(g => { const p = g.pays.split(' · ')[0]; byPays[p] = (byPays[p]||0) + g.ventes; });
   const pp = Object.entries(byPays).sort((a,b)=>b[1]-a[1]);
@@ -521,7 +614,7 @@ function renderClassement(){
   $('#classTable').innerHTML = `<table><thead><tr><th>#</th><th>Groupe</th><th>Pays</th><th class="num">${lab}</th><th class="hide-m">Part</th><th class="num hide-m">Ventes</th><th class="num hide-m">Capi.</th></tr></thead><tbody>` +
     rows.map((r,i)=>`<tr onclick="openGroupe('${r.g.id}')" style="cursor:pointer"><td><span class="rank ${i<3?'r'+(i+1):''}">${i+1}</span></td><td><div style="display:flex;align-items:center;gap:9px">${logoHTML(r.g.nom,r.g.domaine,r.g.id,r.g.couleur)}<b>${r.g.nom}</b></div></td><td>${flag(r.g.pays)} ${r.g.pays.split(' · ')[0]}</td><td class="num"><b>${ff(r.v)}</b></td><td class="hide-m"><div class="bar"><i style="width:${Math.abs(r.v)/max*100}%;background:${r.v<0?'var(--bad)':r.g.couleur}"></i></div></td><td class="num hide-m">${fM(r.g.ventes)}</td><td class="num hide-m">${fB(r.g.capi)}</td></tr>`).join('') + '</tbody></table>';
   $('#classNote').textContent = `Unité : ${unit}. Cliquez sur un groupe pour ouvrir sa fiche.`;
-  renderAll.charts.cClass = () => mk('cClass', {type:'bar', data:{labels:rows.slice(0,20).map(r=>r.g.nom.split(' ')[0]), datasets:[{data:rows.slice(0,20).map(r=>r.v), backgroundColor:rows.slice(0,20).map(r=>r.g.couleur), borderRadius:4}]}, options:{plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+ff(c.raw)}}}, maintainAspectRatio:false, scales:{x:{ticks:{autoSkip:false, maxRotation:60}}}}});
+  renderAll.charts.cClass = () => mk('cClass', {type:'bar', data:{labels:rows.slice(0,20).map(r=>court(r.g)), datasets:[{data:rows.slice(0,20).map(r=>r.v), backgroundColor:rows.slice(0,20).map(r=>r.g.couleur), borderRadius:4}]}, options:{plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+ff(c.raw)}}}, maintainAspectRatio:false, scales:{x:{ticks:{autoSkip:false, maxRotation:60}}}}});
   renderAll.charts.cClass();
 }
 
@@ -682,21 +775,22 @@ function squarify(items, x, y, w, h, out){
   else { const ch = sum/w; let cx = x; row.forEach(i => { const cw = i.v/ch; out.push({...i, x:cx, y, w:cw, h:ch}); cx += cw; }); squarify(rest.map(i=>({...i})), x, y+ch, w, h-ch, out); }
 }
 function renderTreemap(){
-  const el = $('#treemap'), W = el.clientWidth || 900, H = 460;
+  const el = $('#treemap'), W = el.clientWidth || 900, H = innerWidth < 800 ? 620 : 460;
   const items = G.filter(g=>g.capi>0).sort((a,b)=>b.capi-a.capi).map(g=>({g, v:g.capi}));
   const out = []; squarify(items, 0, 0, W, H, out);
   const tot = items.reduce((a,i)=>a+i.v,0);
   el.style.height = H+'px';
-  el.innerHTML = out.map(r => { const big = r.w > 70 && r.h > 40; return `<div class="tm" onclick="openGroupe('${r.g.id}')" style="left:${r.x}px;top:${r.y}px;width:${r.w-2}px;height:${r.h-2}px;background:${r.g.couleur}" title="${r.g.nom} : ${fB(r.g.capi)} (${fmt(r.v/tot*100,1)} %)">${big?`<b>${r.g.nom.split(',')[0].split(' (')[0].replace(' Company','').replace(' Motor Corporation','').replace(' Motor Co.','').replace(' Group','')}</b><span>${fB(r.g.capi)}</span>`:''}</div>`; }).join('');
+  el.innerHTML = out.map(r => { const big = r.w > 54 && r.h > 34; return `<div class="tm" onclick="openGroupe('${r.g.id}')" style="left:${r.x}px;top:${r.y}px;width:${r.w-2}px;height:${r.h-2}px;background:${r.g.couleur}" title="${r.g.nom} : ${fB(r.g.capi)} (${fmt(r.v/tot*100,1)} %)">${big?`<b>${court(r.g).replace('General Motors','GM').replace('Mercedes-Benz','Mercedes')}</b><span>${r.w>80?fB(r.g.capi):''}</span>`:''}</div>`; }).join('');
+  const leg = $('#treemapLeg'); if(leg) leg.innerHTML = items.map((it,k)=>`<div class="tl-it" onclick="openGroupe('${it.g.id}')"><span class="rk">${k+1}</span><i style="background:${it.g.couleur}"></i><span class="nm">${court(it.g)}</span><b>${fB(it.g.capi)}</b><span class="pc">${fmt(it.v/tot*100,1)} %</span></div>`).join('');
 }
 /* Évolution comparée 2015-2025 */
 function initEvolution(){
-  const box = $('#evoPick'); box.innerHTML = [...G].sort((a,b)=>b.ventes-a.ventes).map(g=>`<label class="chk"><input type="checkbox" value="${g.id}" ${['toyota','volkswagen','gm','byd','tesla','geely'].includes(g.id)?'checked':''}><span style="background:${g.couleur}"></span>${g.nom.split(' ')[0]}</label>`).join('');
+  const box = $('#evoPick'); box.innerHTML = [...G].sort((a,b)=>b.ventes-a.ventes).map(g=>`<label class="chk"><input type="checkbox" value="${g.id}" ${['toyota','volkswagen','gm','byd','tesla','geely'].includes(g.id)?'checked':''}><span style="background:${g.couleur}"></span>${court(g)}</label>`).join('');
   box.addEventListener('change', renderEvolution); $('#evoMode').addEventListener('change', renderEvolution); renderEvolution();
 }
 function renderEvolution(){
   const ids = $$('#evoPick input:checked').map(i=>i.value).slice(0,8), mode = $('#evoMode').value;
-  const ds = ids.map(id => { const g = GI[id]; const base = g.ventes_hist.find(v=>v>0)||1; return {label:g.nom, data:g.ventes_hist.map(v => mode==='base' ? (v/base*100) : v), borderColor:g.couleur, backgroundColor:g.couleur+'22', tension:.3, pointRadius:3, fill:false}; });
+  const ds = ids.map(id => { const g = GI[id]; const base = g.ventes_hist.find(v=>v>0)||1; return {label:court(g), data:g.ventes_hist.map(v => mode==='base' ? (v/base*100) : v), borderColor:g.couleur, backgroundColor:g.couleur+'22', tension:.3, pointRadius:3, fill:false}; });
   renderAll.charts.cEvo = () => mk('cEvo', {type:'line', data:{labels:ANNEES, datasets:ds}, options:{maintainAspectRatio:false, plugins:{tooltip:{callbacks:{label:c=>' '+c.dataset.label+' : '+(mode==='base'?fmt(c.raw,0)+' (base 100)':fM(c.raw))}}}, scales:{y:{title:{display:true,text:mode==='base'?'Indice base 100 en 2015':'Millions de véhicules'}}}}});
   renderAll.charts.cEvo();
 }
@@ -707,7 +801,7 @@ function renderHeatmap(){
   const vals = keys.map(k => rows.map(g => INDIC[k][2](g)));
   const rank = keys.map((k,i) => { const sorted = [...vals[i]].sort((a,b)=>b-a); return vals[i].map(v => sorted.indexOf(v)); });
   const col = r => { const t = 1 - r/(rows.length-1); return isDark() ? `rgba(96,165,250,${(.12+t*.75).toFixed(2)})` : `rgba(29,78,216,${(.06+t*.7).toFixed(2)})`; };
-  $('#heat').innerHTML = `<table class="heat"><thead><tr><th>Groupe</th>${keys.map(k=>`<th>${INDIC[k][0].replace('Valeur en bourse par véhicule vendu','Bourse / véhicule').replace('Part d\'électrique dans les ventes','Électrique').replace('Croissance des ventes 2020-2025','Croissance 20-25').replace('Recherche et développement','R&D').replace('Chiffre d\'affaires 2025','CA').replace('Capitalisation boursière','Bourse').replace('Résultat net 2025','Résultat')}</th>`).join('')}</tr></thead><tbody>` + rows.map((g,ri)=>`<tr onclick="openGroupe('${g.id}')"><td><div style="display:flex;align-items:center;gap:7px">${logoHTML(g.nom,g.domaine,g.id,g.couleur)}<b>${g.nom.split(' ')[0]}</b></div></td>${keys.map((k,ki)=>`<td style="background:${col(rank[ki][ri])};color:${rank[ki][ri]<rows.length/2&&!isDark()?'#fff':'var(--ink)'}" title="${INDIC[k][0]} : ${INDIC[k][3](vals[ki][ri])}">${rank[ki][ri]+1}</td>`).join('')}</tr>`).join('') + '</tbody></table>';
+  $('#heat').innerHTML = `<table class="heat"><thead><tr><th>Groupe</th>${keys.map(k=>`<th>${INDIC[k][0].replace('Valeur en bourse par véhicule vendu','Bourse / véhicule').replace('Part d\'électrique dans les ventes','Électrique').replace('Croissance des ventes 2020-2025','Croissance 20-25').replace('Recherche et développement','R&D').replace('Chiffre d\'affaires 2025','CA').replace('Capitalisation boursière','Bourse').replace('Résultat net 2025','Résultat')}</th>`).join('')}</tr></thead><tbody>` + rows.map((g,ri)=>`<tr onclick="openGroupe('${g.id}')"><td><div style="display:flex;align-items:center;gap:7px">${logoHTML(g.nom,g.domaine,g.id,g.couleur)}<b>${court(g)}</b></div></td>${keys.map((k,ki)=>`<td style="background:${col(rank[ki][ri])};color:${rank[ki][ri]<rows.length/2&&!isDark()?'#fff':'var(--ink)'}" title="${INDIC[k][0]} : ${INDIC[k][3](vals[ki][ri])}">${rank[ki][ri]+1}</td>`).join('')}</tr>`).join('') + '</tbody></table>';
 }
 /* Marques : graphique des ventes */
 function renderMarquesChart(){
@@ -762,24 +856,24 @@ function renderModeles(){
 /* Régions */
 function renderRegions(){
   const gs = [...G].filter(g=>REG[g.id] && g.ventes>0.3).sort((a,b)=>b.ventes-a.ventes);
-  renderAll.charts.cReg = () => mk('cReg', {type:'bar', data:{labels:gs.map(g=>g.nom.split(' ')[0]), datasets:REGN.map((r,i)=>({label:r, data:gs.map(g=>REG[g.id][i]), backgroundColor:REGC[i], stack:'s'}))}, options:{maintainAspectRatio:false, plugins:{tooltip:{callbacks:{label:c=>' '+c.dataset.label+' : '+c.raw+' % ('+fM(gs[c.dataIndex].ventes*c.raw/100)+')'}}}, scales:{x:{stacked:true, ticks:{autoSkip:false,maxRotation:70}}, y:{stacked:true, max:100, title:{display:true,text:'% des ventes 2025'}}}}});
+  renderAll.charts.cReg = () => mk('cReg', {type:'bar', data:{labels:gs.map(g=>court(g)), datasets:REGN.map((r,i)=>({label:r, data:gs.map(g=>REG[g.id][i]), backgroundColor:REGC[i], stack:'s'}))}, options:{maintainAspectRatio:false, plugins:{tooltip:{callbacks:{label:c=>' '+c.dataset.label+' : '+c.raw+' % ('+fM(gs[c.dataIndex].ventes*c.raw/100)+')'}}}, scales:{x:{stacked:true, ticks:{autoSkip:false,maxRotation:70}}, y:{stacked:true, max:100, title:{display:true,text:'% des ventes 2025'}}}}});
   renderAll.charts.cReg();
   const tot = REGN.map((r,i) => gs.reduce((a,g)=>a+g.ventes*REG[g.id][i]/100,0));
   renderAll.charts.cRegTot = () => mk('cRegTot', {type:'doughnut', data:{labels:REGN, datasets:[{data:tot, backgroundColor:REGC, borderWidth:0}]}, options:{plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>' '+c.label+' : '+fM(c.raw)}}}, cutout:'60%', maintainAspectRatio:false}});
   renderAll.charts.cRegTot();
   const dep = gs.map(g => ({g, v:Math.max(...REG[g.id]), r:REGN[REG[g.id].indexOf(Math.max(...REG[g.id]))]})).sort((a,b)=>b.v-a.v);
-  $('#regTable').innerHTML = `<table><thead><tr><th>Groupe</th><th>Première région</th><th class="num">Poids</th><th class="hide-m">Répartition</th></tr></thead><tbody>` + dep.map(r=>`<tr onclick="openGroupe('${r.g.id}')" style="cursor:pointer"><td><div style="display:flex;align-items:center;gap:7px">${logoHTML(r.g.nom,r.g.domaine,r.g.id,r.g.couleur)}<b>${r.g.nom.split(' ')[0]}</b></div></td><td>${r.r}</td><td class="num">${r.v} %</td><td class="hide-m"><div class="stackbar">${REG[r.g.id].map((v,i)=>`<i style="width:${v}%;background:${REGC[i]}" title="${REGN[i]} ${v} %"></i>`).join('')}</div></td></tr>`).join('') + '</tbody></table>';
+  $('#regTable').innerHTML = `<table><thead><tr><th>Groupe</th><th>Première région</th><th class="num">Poids</th><th class="hide-m">Répartition</th></tr></thead><tbody>` + dep.map(r=>`<tr onclick="openGroupe('${r.g.id}')" style="cursor:pointer"><td><div style="display:flex;align-items:center;gap:7px">${logoHTML(r.g.nom,r.g.domaine,r.g.id,r.g.couleur)}<b>${court(r.g)}</b></div></td><td>${r.r}</td><td class="num">${r.v} %</td><td class="hide-m"><div class="stackbar">${REG[r.g.id].map((v,i)=>`<i style="width:${v}%;background:${REGC[i]}" title="${REGN[i]} ${v} %"></i>`).join('')}</div></td></tr>`).join('') + '</tbody></table>';
   $('#regText').innerHTML = `<p>Le monde automobile se lit en trois blocs. Les constructeurs chinois réalisent encore plus des trois quarts de leurs ventes en Chine, mais l'export grimpe vite : BYD y a fait 23 % de ses volumes en 2025 contre 10 % un an plus tôt. Les groupes allemands dépendent de la Chine pour plus d'un quart de leurs ventes, ce qui explique leur exposition à la guerre des prix. Les Américains (GM, Ford) et Subaru sont les plus concentrés sur l'Amérique du Nord ; Suzuki et Mahindra vivent de l'Inde ; Renault est le plus européen des grands groupes.</p>`;
 }
 /* Alliances : réseau en cercle */
 function renderAlliances(){
   const ids = [...new Set(ALL.flatMap(a=>[a[0],a[1]]))].filter(id=>GI[id]);
-  const n = ids.length, W = 760, H = 760, cx = W/2, cy = H/2, R = 300;
+  const n = ids.length, W = 760, H = 760, cx = W/2, cy = H/2, R = MOBILE() ? 250 : 300;
   const pos = {}; ids.forEach((id,i) => { const a = -Math.PI/2 + i/n*2*Math.PI; pos[id] = [cx+R*Math.cos(a), cy+R*Math.sin(a)]; });
   const col = {Alliance:'#dc2626',Participation:'#1d4ed8',Coentreprise:'#059669',Coopération:'#d97706'};
   const lines = ALL.filter(a=>pos[a[0]]&&pos[a[1]]).map((a,i)=>`<line class="al" data-i="${i}" x1="${pos[a[0]][0]}" y1="${pos[a[0]][1]}" x2="${pos[a[1]][0]}" y2="${pos[a[1]][1]}" stroke="${col[a[2]]}" stroke-width="${a[2]==='Alliance'?4:a[2]==='Participation'?2.5:1.6}" stroke-opacity=".55"/>`).join('');
-  const nodes = ids.map(id => { const g = GI[id], [x,y] = pos[id], deg = ALL.filter(a=>a[0]===id||a[1]===id).length, r = 16+deg*2.2; return `<g class="nd" data-id="${id}" transform="translate(${x},${y})"><circle r="${r}" fill="${g.couleur}" stroke="#fff" stroke-width="2"/><text y="${r+14}" text-anchor="middle" font-size="12" font-weight="600" fill="currentColor">${g.nom.split(' ')[0]}</text></g>`; }).join('');
-  $('#allSvg').innerHTML = `<svg viewBox="0 0 ${W} ${H}" class="allsvg">${lines}${nodes}</svg>`;
+  const nodes = ids.map(id => { const g = GI[id], [x,y] = pos[id], deg = ALL.filter(a=>a[0]===id||a[1]===id).length, r = (MOBILE()?20:16)+deg*2.2, fs = MOBILE()?23:12; return `<g class="nd" data-id="${id}" transform="translate(${x},${y})"><circle r="${r}" fill="${g.couleur}" stroke="#fff" stroke-width="2"/><text x="${((x-cx)/R)*(r+6)}" y="${((y-cy)/R)*(r+6)+fs*0.35}" text-anchor="${(x-cx)/R>0.25?'start':(x-cx)/R<-0.25?'end':'middle'}" font-size="${fs}" font-weight="600" fill="currentColor">${court(g)}</text></g>`; }).join('');
+  $('#allSvg').innerHTML = `<svg viewBox="-110 -10 980 780" class="allsvg">${lines}${nodes}</svg>`;
   $('#allLeg').innerHTML = Object.entries(col).map(([k,c])=>`<span><i style="background:${c}"></i>${k}</span>`).join('');
   const list = $('#allList');
   const show = id => { const g = GI[id]; const rows = ALL.filter(a=>a[0]===id||a[1]===id); list.innerHTML = `<h3 style="display:flex;align-items:center;gap:8px">${logoHTML(g.nom,g.domaine,g.id,g.couleur)}${g.nom} · ${rows.length} lien${rows.length>1?'s':''}</h3><ul class="ul">${rows.map(a=>{ const o = GI[a[0]===id?a[1]:a[0]]; return `<li><b style="color:${col[a[2]]}">${a[2]}</b> avec <b>${o.nom}</b> : ${a[3]}</li>`; }).join('')}</ul>`; $$('#allSvg line').forEach((l,i)=>{ const a = ALL[+l.dataset.i]; l.setAttribute('stroke-opacity', (a[0]===id||a[1]===id)?1:.12); }); $$('#allSvg .nd').forEach(nd => nd.style.opacity = (nd.dataset.id===id || rows.some(a=>a[0]===nd.dataset.id||a[1]===nd.dataset.id)) ? 1 : .3); };
@@ -790,10 +884,10 @@ function renderAlliances(){
 /* Dirigeants */
 function renderDirigeants(){
   const rows = [...G].filter(g=>DIR[g.id]).sort((a,b)=>b.ventes-a.ventes);
-  $('#dirTable').innerHTML = `<table><thead><tr><th>Groupe</th><th>Dirigeant</th><th class="hide-m">Fonction</th><th class="num">Depuis</th><th class="num">Ancienneté</th><th class="hide-m">Nationalité</th><th class="hide-m">Note</th></tr></thead><tbody>` + rows.map(g=>{ const d = DIR[g.id]; return `<tr onclick="openGroupe('${g.id}')" style="cursor:pointer"><td><div style="display:flex;align-items:center;gap:7px">${logoHTML(g.nom,g.domaine,g.id,g.couleur)}<b>${g.nom.split(' (')[0]}</b></div></td><td><b>${d[0]}</b></td><td class="hide-m small">${d[1]}</td><td class="num">${d[2]}</td><td class="num">${2026-d[2]} an${2026-d[2]>1?'s':''}</td><td class="hide-m">${d[3]}</td><td class="hide-m small muted">${d[4]}</td></tr>`; }).join('') + '</tbody></table>';
+  $('#dirTable').innerHTML = `<table><thead><tr><th>Groupe</th><th>Dirigeant</th><th class="hide-m">Fonction</th><th class="num hide-m">Depuis</th><th class="num">Ancienneté</th><th class="hide-m">Nationalité</th><th class="hide-m">Note</th></tr></thead><tbody>` + rows.map(g=>{ const d = DIR[g.id]; return `<tr onclick="openGroupe('${g.id}')" style="cursor:pointer"><td><div style="display:flex;align-items:center;gap:7px">${logoHTML(g.nom,g.domaine,g.id,g.couleur)}<b>${g.nom.split(' (')[0]}</b></div></td><td><b>${d[0]}</b></td><td class="hide-m small">${d[1]}</td><td class="num hide-m">${d[2]}</td><td class="num">${2026-d[2]} an${2026-d[2]>1?'s':''}</td><td class="hide-m">${d[3]}</td><td class="hide-m small muted">${d[4]}</td></tr>`; }).join('') + '</tbody></table>';
   const fond = rows.filter(g=>DIR[g.id][1].includes('fondateur')).length, nouveaux = rows.filter(g=>DIR[g.id][2]>=2024).length, nat = {}; rows.forEach(g => { nat[DIR[g.id][3]] = (nat[DIR[g.id][3]]||0)+1; });
   const nn = Object.entries(nat).sort((a,b)=>b[1]-a[1]);
-  renderAll.charts.cNat = () => mk('cNat', {type:'bar', data:{labels:nn.map(x=>x[0]), datasets:[{data:nn.map(x=>x[1]), backgroundColor:'#1d4ed8', borderRadius:4}]}, options:{indexAxis:'y', plugins:{legend:{display:false}}, maintainAspectRatio:false}});
+  renderAll.charts.cNat = () => mk('cNat', {type:'bar', data:{labels:nn.map(x=>x[0]), datasets:[{vf:v=>fmt(v,0), data:nn.map(x=>x[1]), backgroundColor:'#1d4ed8', borderRadius:4}]}, options:{indexAxis:'y', plugins:{legend:{display:false}}, maintainAspectRatio:false}});
   renderAll.charts.cNat();
   $('#dirText').innerHTML = `<p><b>${fond}</b> des ${rows.length} groupes sont encore dirigés par leur fondateur, tous chinois ou américains (Wang Chuanfu, Li Shufu, Lei Jun, Elon Musk, RJ Scaringe…). <b>${nouveaux}</b> patrons sont en poste depuis moins de deux ans : l'industrie a changé de tête chez Stellantis, Nissan, Renault, Porsche, Lucid, Daimler Truck et Aston Martin. Mary Barra (GM) et Elon Musk (Tesla) sont les dirigeants non fondateurs les plus anciens.</p>`;
 }
@@ -809,7 +903,7 @@ function renderFichePays(){
   <p style="margin:12px 0">${flag(nom)} ${p.note}.</p>
   <div class="grid g2"><div class="card"><h3>Groupes du pays</h3><div class="gcards" style="grid-template-columns:1fr">${gs.length?gs.sort((a,b)=>b.ventes-a.ventes).map(groupeCard).join(''):'<p class="muted">Aucun groupe de premier plan n\'a son siège dans ce pays ; sa production vient d\'usines de groupes étrangers.</p>'}</div></div>
   <div style="display:grid;gap:16px"><div class="card"><h3>Marques nées ici</h3><p>${ms.length?ms.map(m=>`<span class="pill acc" style="cursor:pointer" onclick="openMarque('${m.nom.replace(/'/g,"\\'")}')">${m.nom}</span>`).join(''):'<span class="muted">Aucune dans la base</span>'}</p></div>
-  <div class="card"><h3>Usines sur son sol</h3><div class="tw"><table><thead><tr><th>Site</th><th>Groupe</th><th class="num">Capacité</th></tr></thead><tbody>${us.sort((a,b)=>b.cap-a.cap).map(u=>`<tr><td><b>${u.nom}</b><div class="small muted">${u.ville}</div></td><td>${GI[u.groupe].nom.split(' ')[0]}</td><td class="num">${u.cap?fmt(u.cap)+' k':'–'}</td></tr>`).join('')||'<tr><td colspan="3" class="muted">Aucune usine cartographiée</td></tr>'}</tbody></table></div></div></div></div>`;
+  <div class="card"><h3>Usines sur son sol</h3><div class="tw"><table><thead><tr><th>Site</th><th>Groupe</th><th class="num">Capacité</th></tr></thead><tbody>${us.sort((a,b)=>b.cap-a.cap).map(u=>`<tr><td><b>${u.nom}</b><div class="small muted">${u.ville}</div></td><td>${court(GI[u.groupe])}</td><td class="num">${u.cap?fmt(u.cap)+' k':'–'}</td></tr>`).join('')||'<tr><td colspan="3" class="muted">Aucune usine cartographiée</td></tr>'}</tbody></table></div></div></div></div>`;
 }
 /* Prix moyen */
 function renderPrix(){
@@ -817,7 +911,7 @@ function renderPrix(){
   renderAll.charts.cPrix = () => mk('cPrix', {type:'bubble', data:{datasets:gs.map(g=>({label:g.nom, data:[{x:PRIX[g.id], y:g.ventes, r:5+Math.sqrt(g.ca)/2}], backgroundColor:g.couleur+'bb', borderColor:g.couleur}))}, options:{maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+c.dataset.label+' : prix moyen '+fmt(c.raw.x,0)+' k$, '+fM(c.raw.y)+' de véhicules'}}}, scales:{x:{type:'logarithmic', title:{display:true,text:'Prix de vente moyen estimé (milliers de $, log)'}}, y:{type:'logarithmic', title:{display:true,text:'Véhicules vendus (millions, log)'}}}}});
   renderAll.charts.cPrix();
   const s = [...gs].sort((a,b)=>PRIX[b.id]-PRIX[a.id]);
-  renderAll.charts.cPrixBar = () => mk('cPrixBar', {type:'bar', data:{labels:s.map(g=>g.nom.split(' ')[0]), datasets:[{data:s.map(g=>PRIX[g.id]), backgroundColor:s.map(g=>g.couleur), borderRadius:3}]}, options:{plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+fmt(c.raw,0)+' k$ en moyenne'}}}, maintainAspectRatio:false, scales:{y:{type:'logarithmic', title:{display:true,text:'Milliers de $ (log)'}}, x:{ticks:{autoSkip:false,maxRotation:70}}}}});
+  renderAll.charts.cPrixBar = () => mk('cPrixBar', {type:'bar', data:{labels:s.map(g=>court(g)), datasets:[{vf:v=>fmt(v,0)+' k$', data:s.map(g=>PRIX[g.id]), backgroundColor:s.map(g=>g.couleur), borderRadius:3}]}, options:{plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+fmt(c.raw,0)+' k$ en moyenne'}}}, maintainAspectRatio:false, scales:{y:{type:'logarithmic', title:{display:true,text:'Milliers de $ (log)'}}, x:{ticks:{autoSkip:false,maxRotation:70}}}}});
   renderAll.charts.cPrixBar();
 }
 /* Synthèse exécutive */
@@ -862,7 +956,7 @@ function renderPays(){
   const sorted = [...P].sort((a,b)=>b.prod-a.prod), tot = sorted.reduce((a,p)=>a+p.prod,0);
   renderAll.charts.cPays2 = () => mk('cPays2', {type:'bar', data:{labels:sorted.map(p=>p.nom), datasets:[{data:sorted.map(p=>p.prod), backgroundColor:sorted.map((p,i)=>i===0?'#dc2626':'#1d4ed8'), borderRadius:4}]}, options:{plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+fmt(c.raw,1)+' M véhicules'}}}, maintainAspectRatio:false, scales:{x:{ticks:{autoSkip:false,maxRotation:70}}, y:{title:{display:true,text:'Millions de véhicules produits (2025)'}}}}});
   renderAll.charts.cPays2();
-  $('#paysTable').innerHTML = `<table><thead><tr><th>#</th><th>Pays</th><th class="num">Production 2025</th><th class="num">Part mondiale</th><th class="hide-m">Groupes du pays</th><th class="hide-m">Note</th></tr></thead><tbody>` + sorted.map((p,i)=>{ const gs = G.filter(g=>g.pays.split(' · ')[0]===p.nom).map(g=>g.nom.split(' ')[0]); return `<tr><td><span class="rank ${i<3?'r'+(i+1):''}">${i+1}</span></td><td>${flag(p.nom)} <b>${p.nom}</b></td><td class="num">${fmt(p.prod,1)} M</td><td class="num">${fmt(p.prod/95*100,1)} %</td><td class="hide-m small">${gs.join(', ')||'–'}</td><td class="hide-m small muted">${p.note}</td></tr>`; }).join('') + '</tbody></table>';
+  $('#paysTable').innerHTML = `<table><thead><tr><th>#</th><th>Pays</th><th class="num">Production 2025</th><th class="num">Part mondiale</th><th class="hide-m">Groupes du pays</th><th class="hide-m">Note</th></tr></thead><tbody>` + sorted.map((p,i)=>{ const gs = G.filter(g=>g.pays.split(' · ')[0]===p.nom).map(g=>court(g)); return `<tr><td><span class="rank ${i<3?'r'+(i+1):''}">${i+1}</span></td><td>${flag(p.nom)} <b>${p.nom}</b></td><td class="num">${fmt(p.prod,1)} M</td><td class="num">${fmt(p.prod/95*100,1)} %</td><td class="hide-m small">${gs.join(', ')||'–'}</td><td class="hide-m small muted">${p.note}</td></tr>`; }).join('') + '</tbody></table>';
   initCartePays();
 }
 
@@ -873,17 +967,17 @@ function renderChrono(){
   sel.addEventListener('change', () => { const g = GI[sel.value]; $('#chronoGroupe').innerHTML = `<div class="tl">${g.histoire.map(([y,t])=>`<div class="e"><div class="y">${y}</div><div class="t">${t}</div></div>`).join('')}</div>`; });
   sel.dispatchEvent(new Event('change'));
   const ages = [...G].sort((a,b)=>a.fondation-b.fondation);
-  renderAll.charts.cAge = () => mk('cAge', {type:'bar', data:{labels:ages.map(g=>g.nom.split(' ')[0]), datasets:[{data:ages.map(g=>2026-g.fondation), backgroundColor:ages.map(g=>g.couleur), borderRadius:3}]}, options:{indexAxis:'y', plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+c.raw+' ans (fondé en '+(2026-c.raw)+')'}}}, maintainAspectRatio:false, scales:{x:{title:{display:true,text:'Années d\'existence'}}}}});
+  renderAll.charts.cAge = () => mk('cAge', {type:'bar', data:{labels:ages.map(g=>court(g)), datasets:[{data:ages.map(g=>2026-g.fondation), backgroundColor:ages.map(g=>g.couleur), borderRadius:3}]}, options:{indexAxis:'y', plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+c.raw+' ans (fondé en '+(2026-c.raw)+')'}}}, maintainAspectRatio:false, scales:{x:{title:{display:true,text:'Années d\'existence'}}}}});
   renderAll.charts.cAge();
 }
 
 /* Effectifs et usines */
 function renderEffectifs(){
   const s = [...G].sort((a,b)=>b.employes-a.employes);
-  renderAll.charts.cEmp = () => mk('cEmp', {type:'bar', data:{labels:s.map(g=>g.nom.split(' ')[0]), datasets:[{label:'Salariés (milliers)', data:s.map(g=>g.employes), backgroundColor:s.map(g=>g.couleur), borderRadius:3}]}, options:{plugins:{legend:{display:false}}, maintainAspectRatio:false, scales:{x:{ticks:{autoSkip:false,maxRotation:70}}}}});
+  renderAll.charts.cEmp = () => mk('cEmp', {type:'bar', data:{labels:s.map(g=>court(g)), datasets:[{vf:v=>fmt(v,0), label:'Salariés (milliers)', data:s.map(g=>g.employes), backgroundColor:s.map(g=>g.couleur), borderRadius:3}]}, options:{plugins:{legend:{display:false}}, maintainAspectRatio:false, scales:{x:{ticks:{autoSkip:false,maxRotation:70}}}}});
   renderAll.charts.cEmp();
   const prod = G.filter(g=>g.employes>5 && g.ventes>0.05).map(g=>({g, v:g.ventes*1e6/(g.employes*1000)})).sort((a,b)=>b.v-a.v);
-  renderAll.charts.cProdSal = () => mk('cProdSal', {type:'bar', data:{labels:prod.map(r=>r.g.nom.split(' ')[0]), datasets:[{data:prod.map(r=>r.v), backgroundColor:prod.map(r=>r.g.couleur), borderRadius:3}]}, options:{indexAxis:'y', plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+fmt(c.raw,1)+' véhicules par salarié'}}}, maintainAspectRatio:false}});
+  renderAll.charts.cProdSal = () => mk('cProdSal', {type:'bar', data:{labels:prod.map(r=>court(r.g)), datasets:[{data:prod.map(r=>r.v), backgroundColor:prod.map(r=>r.g.couleur), borderRadius:3}]}, options:{indexAxis:'y', plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+fmt(c.raw,1)+' véhicules par salarié'}}}, maintainAspectRatio:false}});
   renderAll.charts.cProdSal();
   $('#effText').innerHTML = `<p>Les ${G.length} groupes emploient <b>${fK(G.reduce((a,g)=>a+g.employes,0))}</b> personnes. Volkswagen est le premier employeur avec ${fK(GI.volkswagen.employes)} salariés, suivi de BYD (${fK(GI.byd.employes)}), dont les effectifs ont été multipliés par quatre en quatre ans. En productivité apparente, Tesla, Maruti Suzuki via Suzuki et Hyundai produisent le plus de véhicules par salarié ; les groupes de luxe et les poids lourds, aux volumes faibles, ferment la marche. Attention : les effectifs incluent parfois des activités hors automobile (batteries chez BYD, électronique chez Xiaomi, camions chez Volvo Group).</p>`;
 }
@@ -891,13 +985,13 @@ function renderEffectifs(){
 /* Finances */
 function renderFinances(){
   const s = [...G].filter(g=>g.ca>0).sort((a,b)=>b.ca-a.ca);
-  renderAll.charts.cCA = () => mk('cCA', {type:'bar', data:{labels:s.map(g=>g.nom.split(' ')[0]), datasets:[{label:'Chiffre d\'affaires (Md$)', data:s.map(g=>g.ca), backgroundColor:'#1d4ed8', borderRadius:3},{label:'Résultat net (Md$)', data:s.map(g=>g.resultat_net), backgroundColor:s.map(g=>g.resultat_net<0?'#dc2626':'#059669'), borderRadius:3}]}, options:{maintainAspectRatio:false, scales:{x:{ticks:{autoSkip:false,maxRotation:70}}}}});
+  renderAll.charts.cCA = () => mk('cCA', {type:'bar', data:{labels:s.map(g=>court(g)), datasets:[{label:'Chiffre d\'affaires (Md$)', data:s.map(g=>g.ca), backgroundColor:'#1d4ed8', borderRadius:3},{label:'Résultat net (Md$)', data:s.map(g=>g.resultat_net), backgroundColor:s.map(g=>g.resultat_net<0?'#dc2626':'#059669'), borderRadius:3}]}, options:{maintainAspectRatio:false, scales:{x:{ticks:{autoSkip:false,maxRotation:70}}, y:{min:-10, title:{display:true,text:'Md$'}}}}});
   renderAll.charts.cCA();
-  const mg = [...G].filter(g=>g.ca>0).map(g=>({g, m:g.resultat_net/g.ca*100})).sort((a,b)=>b.m-a.m);
-  renderAll.charts.cMarge = () => mk('cMarge', {type:'bar', data:{labels:mg.map(r=>r.g.nom.split(' ')[0]), datasets:[{data:mg.map(r=>r.m), backgroundColor:mg.map(r=>r.m<0?'#dc2626':r.g.couleur), borderRadius:3}]}, options:{indexAxis:'y', plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' Marge nette '+fmt(c.raw,1)+' %'}}}, maintainAspectRatio:false, scales:{x:{title:{display:true,text:'Marge nette 2025 (%)'}}}}});
+  const mgAll = [...G].filter(g=>g.ca>0).map(g=>({g, m:g.resultat_net/g.ca*100})).sort((a,b)=>b.m-a.m); const mg = mgAll.filter(r=>r.m > -40); const horsG = mgAll.filter(r=>r.m <= -40); setTimeout(()=>{ const n = $('#margeNote'); if(n) n.textContent = horsG.length ? 'Hors graphique (pertes supérieures à 40 % du chiffre d\'affaires) : ' + horsG.map(r=>court(r.g)+' '+fmt(r.m,0)+' %').join(', ') + '.' : ''; });
+  renderAll.charts.cMarge = () => mk('cMarge', {type:'bar', data:{labels:mg.map(r=>court(r.g)), datasets:[{data:mg.map(r=>r.m), backgroundColor:mg.map(r=>r.m<0?'#dc2626':r.g.couleur), borderRadius:3}]}, options:{indexAxis:'y', plugins:{legend:{display:false}, valeurs:{fmt:v=>fmt(v,1)+' %'}, tooltip:{callbacks:{label:c=>' Marge nette '+fmt(c.raw,1)+' %'}}}, maintainAspectRatio:false, scales:{x:{title:{display:true,text:'Marge nette 2025 (%)'}}}}});
   renderAll.charts.cMarge();
   const rd = [...G].filter(g=>g.rd>0).sort((a,b)=>b.rd-a.rd).slice(0,15);
-  renderAll.charts.cRD = () => mk('cRD', {type:'bar', data:{labels:rd.map(g=>g.nom.split(' ')[0]), datasets:[{data:rd.map(g=>g.rd), backgroundColor:rd.map(g=>g.couleur), borderRadius:3}]}, options:{plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+fB(c.raw)+' de R&D'}}}, maintainAspectRatio:false}});
+  renderAll.charts.cRD = () => mk('cRD', {type:'bar', data:{labels:rd.map(g=>court(g)), datasets:[{data:rd.map(g=>g.rd), backgroundColor:rd.map(g=>g.couleur), borderRadius:3}]}, options:{plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+fB(c.raw)+' de R&D'}}}, maintainAspectRatio:false}});
   renderAll.charts.cRD();
   $('#finText').innerHTML = `<p>Ferrari affiche la marge nette la plus élevée de l'industrie (${fmt(GI.ferrari.resultat_net/GI.ferrari.ca*100,1)} %) avec moins de 14 000 voitures, quand Volkswagen, premier chiffre d'affaires mondial (${fB(GI.volkswagen.ca)}), ne dégage que ${fmt(GI.volkswagen.resultat_net/GI.volkswagen.ca*100,1)} %. Stellantis et Nissan ont terminé 2025 en perte, lestés par leurs restructurations ; les jeunes constructeurs électriques américains (Rivian, Lucid) perdent encore plusieurs milliards par an. Volkswagen reste le premier investisseur mondial en recherche et développement, toutes industries confondues hors technologie.</p>`;
 }
@@ -905,26 +999,26 @@ function renderFinances(){
 /* Bourse */
 function renderBourse(){
   const s = [...G].filter(g=>g.capi>0).sort((a,b)=>b.capi-a.capi);
-  renderAll.charts.cCapi = () => mk('cCapi', {type:'bar', data:{labels:s.map(g=>g.nom.split(' ')[0]), datasets:[{data:s.map(g=>g.capi), backgroundColor:s.map(g=>g.couleur), borderRadius:3}]}, options:{plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+fB(c.raw)}}}, maintainAspectRatio:false, scales:{y:{type:'logarithmic', title:{display:true,text:'Capitalisation (Md$, échelle logarithmique)'}}, x:{ticks:{autoSkip:false,maxRotation:70}}}}});
+  renderAll.charts.cCapi = () => mk('cCapi', {type:'bar', data:{labels:s.map(g=>court(g)), datasets:[{data:s.map(g=>g.capi), backgroundColor:s.map(g=>g.couleur), borderRadius:3}]}, options:{plugins:{legend:{display:false}, valeurs:{fmt:fB}, tooltip:{callbacks:{label:c=>' '+fB(c.raw)}}}, maintainAspectRatio:false, scales:{y:{type:'logarithmic', title:{display:true,text:'Capitalisation (Md$, échelle logarithmique)'}}, x:{ticks:{autoSkip:false,maxRotation:70}}}}});
   renderAll.charts.cCapi();
   const tot = s.reduce((a,g)=>a+g.capi,0), byP = {}; s.forEach(g => { const p = g.pays.split(' · ')[0]; byP[p]=(byP[p]||0)+g.capi; });
   const pp = Object.entries(byP).sort((a,b)=>b[1]-a[1]);
   renderAll.charts.cCapiPays = () => mk('cCapiPays', {type:'doughnut', data:{labels:pp.map(x=>x[0]), datasets:[{data:pp.map(x=>x[1]), backgroundColor:pal, borderWidth:0}]}, options:{plugins:{legend:{position:'right'}, tooltip:{callbacks:{label:c=>' '+c.label+' : '+fB(c.raw)+' ('+fmt(c.raw/tot*100,1)+' %)'}}}, cutout:'62%', maintainAspectRatio:false}});
   renderAll.charts.cCapiPays();
-  $('#bourseTable').innerHTML = `<table><thead><tr><th>#</th><th>Groupe</th><th>Ticker</th><th class="hide-m">Place de cotation</th><th class="num">Capitalisation</th><th class="num">Capi / CA</th><th class="num hide-m">$ par véhicule vendu</th></tr></thead><tbody>` + s.map((g,i)=>`<tr onclick="openGroupe('${g.id}')" style="cursor:pointer"><td><span class="rank ${i<3?'r'+(i+1):''}">${i+1}</span></td><td><b>${g.nom}</b></td><td class="mono">${g.ticker}</td><td class="hide-m small">${g.bourse}</td><td class="num"><b>${fB(g.capi)}</b></td><td class="num">${g.ca?fmt(g.capi/g.ca,1)+'×':'–'}</td><td class="num hide-m">${g.ventes?fmt(g.capi*1e9/(g.ventes*1e6),0):'–'}</td></tr>`).join('') + '</tbody></table>';
+  $('#bourseTable').innerHTML = `<table><thead><tr><th>#</th><th>Groupe</th><th class="hide-m">Ticker</th><th class="hide-m">Place de cotation</th><th class="num">Capitalisation</th><th class="num">Capi / CA</th><th class="num hide-m">$ par véhicule vendu</th></tr></thead><tbody>` + s.map((g,i)=>`<tr onclick="openGroupe('${g.id}')" style="cursor:pointer"><td><span class="rank ${i<3?'r'+(i+1):''}">${i+1}</span></td><td><b>${g.nom}</b></td><td class="mono hide-m">${g.ticker}</td><td class="hide-m small">${g.bourse}</td><td class="num"><b>${fB(g.capi)}</b></td><td class="num">${g.ca?fmt(g.capi/g.ca,1)+'×':'–'}</td><td class="num hide-m">${g.ventes?fmt(g.capi*1e9/(g.ventes*1e6),0):'–'}</td></tr>`).join('') + '</tbody></table>';
   $('#bourseText').innerHTML = `<p>Au 31 décembre 2025, Tesla représente <b>${fmt(GI.tesla.capi/tot*100,0)} %</b> de la capitalisation cumulée des constructeurs suivis. Les États-Unis pèsent ${fmt(byP['États-Unis']/tot*100,0)} % de la valeur boursière mondiale de l'automobile pour ${fmt(G.filter(g=>g.pays.startsWith('États-Unis')).reduce((a,g)=>a+g.ventes,0)/G.reduce((a,g)=>a+g.ventes,0)*100,0)} % des ventes. Les marchés valorisent les groupes électriques et technologiques (Tesla, Xiaomi, BYD) plusieurs fois leur chiffre d'affaires, et les généralistes européens et japonais moins d'une demi-année de ventes. Hors cote : FAW et Dongfeng (groupes d'État chinois), ainsi que les filiales non cotées séparément.</p>`;
 }
 
 /* Électrification */
 function renderElec(){
   const s = [...G].filter(g=>g.ventes>0.1).sort((a,b)=>b.part_ev-a.part_ev);
-  renderAll.charts.cEV = () => mk('cEV', {type:'bar', data:{labels:s.map(g=>g.nom.split(' ')[0]), datasets:[{data:s.map(g=>g.part_ev), backgroundColor:s.map(g=>g.part_ev>=50?'#059669':g.part_ev>=15?'#1d4ed8':'#94a3b8'), borderRadius:3}]}, options:{plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+c.raw+' % de 100 % électriques'}}}, maintainAspectRatio:false, scales:{x:{ticks:{autoSkip:false,maxRotation:70}}, y:{max:100, title:{display:true,text:'Part des 100 % électriques dans les ventes 2025 (%)'}}}}});
+  renderAll.charts.cEV = () => mk('cEV', {type:'bar', data:{labels:s.map(g=>court(g)), datasets:[{data:s.map(g=>g.part_ev), backgroundColor:s.map(g=>g.part_ev>=50?'#059669':g.part_ev>=15?'#1d4ed8':'#94a3b8'), borderRadius:3}]}, options:{plugins:{legend:{display:false}, valeurs:{fmt:v=>v+' %'}, tooltip:{callbacks:{label:c=>' '+c.raw+' % de 100 % électriques'}}}, maintainAspectRatio:false, scales:{x:{ticks:{autoSkip:false,maxRotation:70}}, y:{max:100, title:{display:true,text:'Part des 100 % électriques dans les ventes 2025 (%)'}}}}});
   renderAll.charts.cEV();
   const ys = Object.keys(D.part_ev).map(Number);
   renderAll.charts.cEVw = () => mk('cEVw', {type:'line', data:{labels:ys, datasets:[{label:'Part mondiale des électriques et hybrides rechargeables (%)', data:ys.map(y=>D.part_ev[y]), borderColor:'#059669', backgroundColor:'rgba(5,150,105,.15)', fill:true, tension:.3}]}, options:{maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{title:{display:true,text:'% des ventes mondiales de voitures'}}}}});
   renderAll.charts.cEVw();
   const ev = s.map(g=>({g, v:g.ventes*g.part_ev/100})).sort((a,b)=>b.v-a.v).slice(0,12);
-  renderAll.charts.cEVvol = () => mk('cEVvol', {type:'bar', data:{labels:ev.map(r=>r.g.nom.split(' ')[0]), datasets:[{data:ev.map(r=>r.v), backgroundColor:ev.map(r=>r.g.couleur), borderRadius:3}]}, options:{indexAxis:'y', plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+fM(c.raw)+' de 100 % électriques (estimation)'}}}, maintainAspectRatio:false, scales:{x:{title:{display:true,text:'Millions de véhicules 100 % électriques (2025)'}}}}});
+  renderAll.charts.cEVvol = () => mk('cEVvol', {type:'bar', data:{labels:ev.map(r=>court(r.g)), datasets:[{data:ev.map(r=>r.v), backgroundColor:ev.map(r=>r.g.couleur), borderRadius:3}]}, options:{indexAxis:'y', plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+fM(c.raw)+' de 100 % électriques (estimation)'}}}, maintainAspectRatio:false, scales:{x:{title:{display:true,text:'Millions de véhicules 100 % électriques (2025)'}}}}});
   renderAll.charts.cEVvol();
   $('#elecText').innerHTML = `<p>En 2025, un quart des voitures vendues dans le monde étaient électriques ou hybrides rechargeables, contre moins de 1 % dix ans plus tôt. BYD a vendu 2,26 millions de 100 % électriques, devant Tesla (1,64 million) et Geely. Les généralistes japonais (Toyota, Honda, Suzuki) restent sous 5 % de 100 % électriques mais dominent l'hybride simple ; Toyota a dépassé 30 millions d'hybrides cumulés. Les parts affichées sont celles des 100 % électriques (BEV) hors hybrides rechargeables.</p>`;
 }
@@ -935,7 +1029,7 @@ function renderValeur(){
   renderAll.charts.cScat = () => mk('cScat', {type:'bubble', data:{datasets:s.map(g=>({label:g.nom, data:[{x:g.ventes, y:g.capi, r:6+Math.sqrt(g.ca)/2}], backgroundColor:g.couleur+'bb', borderColor:g.couleur}))}, options:{maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>' '+c.dataset.label+' : '+fM(c.raw.x)+' véhicules, '+fB(c.raw.y)+' en bourse'}}}, scales:{x:{type:'logarithmic', title:{display:true,text:'Véhicules vendus 2025 (millions, log)'}}, y:{type:'logarithmic', title:{display:true,text:'Capitalisation (Md$, log)'}}}}});
   renderAll.charts.cScat();
   const vv = s.map(g=>({g, v:g.capi*1e9/(g.ventes*1e6)})).sort((a,b)=>b.v-a.v);
-  $('#valTable').innerHTML = `<table><thead><tr><th>#</th><th>Groupe</th><th class="num">Capitalisation par véhicule vendu</th><th class="num hide-m">CA par véhicule</th><th class="num hide-m">Résultat net par véhicule</th></tr></thead><tbody>` + vv.map((r,i)=>`<tr><td><span class="rank ${i<3?'r'+(i+1):''}">${i+1}</span></td><td><b>${r.g.nom}</b></td><td class="num"><b>${fmt(r.v,0)} $</b></td><td class="num hide-m">${fmt(r.g.ca*1e9/(r.g.ventes*1e6),0)} $</td><td class="num hide-m">${fmt(r.g.resultat_net*1e9/(r.g.ventes*1e6),0)} $</td></tr>`).join('') + '</tbody></table>';
+  $('#valTable').innerHTML = `<table><thead><tr><th>#</th><th>Groupe</th><th class="num">Bourse / véhicule</th><th class="num hide-m">CA / véhicule</th><th class="num hide-m">Résultat / véhicule</th></tr></thead><tbody>` + vv.map((r,i)=>`<tr><td><span class="rank ${i<3?'r'+(i+1):''}">${i+1}</span></td><td><b>${court(r.g)}</b></td><td class="num"><b>${fmt(r.v,0)} $</b></td><td class="num hide-m">${fmt(r.g.ca*1e9/(r.g.ventes*1e6),0)} $</td><td class="num hide-m">${fmt(r.g.resultat_net*1e9/(r.g.ventes*1e6),0)} $</td></tr>`).join('') + '</tbody></table>';
 }
 
 /* Comparateur */
@@ -948,12 +1042,12 @@ function renderComparateur(){
   const ids = ['c1','c2','c3'].map(id=>$('#'+id).value).filter(Boolean), gs = ids.map(id=>GI[id]); if(gs.length < 2){ $('#cmpOut').innerHTML = '<p class="muted">Choisissez au moins deux groupes.</p>'; return; }
   const rows = [['Pays', g=>flag(g.pays)+' '+g.pays, null],['Fondation', g=>g.fondation, 'min'],['Dirigeant', g=>g.dirigeant, null],['Ventes 2025', g=>fM(g.ventes), g=>g.ventes],['Chiffre d\'affaires', g=>fB(g.ca), g=>g.ca],['Résultat net', g=>fB(g.resultat_net), g=>g.resultat_net],['Marge nette', g=>fmt(g.resultat_net/g.ca*100,1)+' %', g=>g.resultat_net/g.ca],['Capitalisation', g=>fB(g.capi), g=>g.capi],['Salariés', g=>fK(g.employes), g=>g.employes],['Véhicules par salarié', g=>fmt(g.ventes*1e6/(g.employes*1000),1), g=>g.ventes/g.employes],['R&D', g=>fB(g.rd), g=>g.rd],['Part 100 % électrique', g=>g.part_ev+' %', g=>g.part_ev],['Usines', g=>g.usines, g=>g.usines],['Marques', g=>g.marques.length, g=>g.marques.length],['Croissance 2020-2025', g=>INDIC.croissance[3](INDIC.croissance[2](g)), g=>INDIC.croissance[2](g)]];
   const score = gs.map(()=>0);
-  const html = `<div class="tw cmp"><table><thead><tr><th></th>${gs.map(g=>`<th><div style="display:flex;align-items:center;gap:8px">${logoHTML(g.nom,g.domaine,g.id,g.couleur)}${g.nom}</div></th>`).join('')}</tr></thead><tbody>` + rows.map(([l,f,sc])=>{ let win = -1; if(sc && sc !== 'min'){ const vals = gs.map(sc); win = vals.indexOf(Math.max(...vals)); } if(sc === 'min'){ const vals = gs.map(g=>g.fondation); win = vals.indexOf(Math.min(...vals)); } if(win>=0) score[win]++; return `<tr><td>${l}</td>${gs.map((g,i)=>`<td class="${i===win?'win':''}">${f(g)}</td>`).join('')}</tr>`; }).join('') + '</tbody></table></div>';
+  const html = `<div class="tw cmp"><table><thead><tr><th></th>${gs.map(g=>`<th><div style="display:flex;align-items:center;gap:8px">${logoHTML(g.nom,g.domaine,g.id,g.couleur)}<span>${court(g)}</span></div></th>`).join('')}</tr></thead><tbody>` + rows.map(([l,f,sc])=>{ let win = -1; if(sc && sc !== 'min'){ const vals = gs.map(sc); win = vals.indexOf(Math.max(...vals)); } if(sc === 'min'){ const vals = gs.map(g=>g.fondation); win = vals.indexOf(Math.min(...vals)); } if(win>=0) score[win]++; return `<tr><td>${l}</td>${gs.map((g,i)=>`<td class="${i===win?'win':''}">${f(g)}</td>`).join('')}</tr>`; }).join('') + '</tbody></table></div>';
   const best = score.indexOf(Math.max(...score));
   $('#cmpOut').innerHTML = html + `<div class="verdict" style="margin-top:14px"><b>Verdict :</b> ${gs[best].nom} l'emporte sur ${score[best]} critères sur ${rows.filter(r=>r[2]).length}${gs.map((g,i)=>i!==best?` ; ${g.nom} : ${score[i]}`:'').join('')}. ${gs[best].id==='tesla'?'Tesla domine par la valeur boursière et la croissance, mais reste loin en volume et en effectifs.':gs[best].id==='toyota'?'Toyota domine par le volume, le chiffre d\'affaires et le résultat absolu.':'Le classement dépend du critère retenu : volume, rentabilité ou valeur boursière racontent des histoires différentes.'}</div><div class="card" style="margin-top:14px"><h3>Profil comparé <span class="sub">chaque axe normalisé sur le meilleur des groupes choisis</span></h3><div class="chart"><canvas id="cRadar"></canvas></div></div>`;
   const axes = [['Ventes',g=>g.ventes],['CA',g=>g.ca],['Capi.',g=>g.capi],['Salariés',g=>g.employes],['R&D',g=>g.rd],['Électrique',g=>g.part_ev],['Marge',g=>Math.max(0,g.resultat_net/g.ca)],['Croissance',g=>Math.max(0,INDIC.croissance[2](g))]];
   const mx = axes.map(([,f])=>Math.max(...gs.map(f))||1);
-  renderAll.charts.cRadar = () => mk('cRadar', {type:'radar', data:{labels:axes.map(a=>a[0]), datasets:gs.map(g=>({label:g.nom, data:axes.map(([,f],i)=>f(g)/mx[i]*100), borderColor:g.couleur, backgroundColor:g.couleur+'33', pointRadius:3}))}, options:{maintainAspectRatio:false, scales:{r:{min:0,max:100, ticks:{display:false}}}}});
+  renderAll.charts.cRadar = () => mk('cRadar', {type:'radar', data:{labels:axes.map(a=>a[0]), datasets:gs.map((g,gi)=>({label:court(g), data:axes.map(([,f],i)=>f(g)/mx[i]*100), borderColor:['#1d4ed8','#dc2626','#059669'][gi], backgroundColor:['#1d4ed833','#dc262633','#05966933'][gi], pointRadius:3}))}, options:{maintainAspectRatio:false, scales:{r:{min:0,max:100, ticks:{display:false}}}}});
   renderAll.charts.cRadar();
 }
 
@@ -962,7 +1056,7 @@ let raceT = null, raceI = 10;
 function renderRace(){
   const yi = raceI, list = [...G].map(g=>({g, v:g.ventes_hist[yi]||0})).sort((a,b)=>b.v-a.v).slice(0,15), mx = list[0].v;
   $('#raceYear').textContent = ANNEES[yi]; $('#raceRange').value = yi;
-  $('#race').innerHTML = list.map((r,i)=>`<div class="row"><span class="rank ${i<3?'r'+(i+1):''}">${i+1}</span>${logoHTML(r.g.nom,r.g.domaine,r.g.id,r.g.couleur,'')}<span class="nm">${r.g.nom}</span><div><div class="b" style="width:${r.v/mx*100}%;background:${r.g.couleur}"></div></div><span class="v">${fmt(r.v,2)} M</span></div>`).join('');
+  $('#race').innerHTML = list.map((r,i)=>`<div class="row"><span class="rank ${i<3?'r'+(i+1):''}">${i+1}</span>${logoHTML(r.g.nom,r.g.domaine,r.g.id,r.g.couleur,'')}<span class="nm">${court(r.g)}</span><div><div class="b" style="width:${r.v/mx*100}%;background:${r.g.couleur}"></div></div><span class="v">${fmt(r.v,2)} M</span></div>`).join('');
 }
 function raceStep(){ raceI = (raceI+1) % ANNEES.length; renderRace(); if(raceI === ANNEES.length-1){ clearInterval(raceT); raceT = null; $('#racePlay').textContent = '▶ Rejouer'; } }
 function racePlay(){ if(raceT){ clearInterval(raceT); raceT = null; $('#racePlay').textContent = '▶ Lecture'; return; } if(raceI === ANNEES.length-1) raceI = -1; $('#racePlay').textContent = '⏸ Pause'; raceStep(); raceT = setInterval(raceStep, 1100); }
